@@ -1,0 +1,22 @@
+# ESP-IDF configuration defaults for Spicy Merkaat Firmware
+
+# ESP32 chipset configuration
+CONFIG_IDF_TARGET="esp32"
+
+# WiFi configuration
+CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM=10
+CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM=32
+CONFIG_ESP_WIFI_DYNAMIC_TX_BUFFER_NUM=32
+
+# MQTT configuration
+CONFIG_MQTT_PROTOCOL_311=y
+
+# OTA configuration
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+
+# Partition table
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions_ota.csv"
+
+# Logging level
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
