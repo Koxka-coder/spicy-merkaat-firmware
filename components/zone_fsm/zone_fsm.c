@@ -53,6 +53,13 @@ esp_err_t zone_fsm_init(zone_event_cb_t cb)
         z->cooldown_s     = cfg.cooldown_s;
         z->enabled        = cfg.enabled;
 
+        if (!GPIO_IS_VALID_OUTPUT_GPIO(z->gpio_pin)) {
+            z->enabled = false;
+            ESP_LOGE(TAG, "Zone %d: invalid output GPIO %d for this target, disabling zone",
+                     ch, z->gpio_pin);
+            continue;
+        }
+
         /* Configure GPIO as output, initially LOW (valve closed) */
         gpio_config_t io_conf = {
             .pin_bit_mask = (1ULL << z->gpio_pin),
@@ -61,8 +68,21 @@ esp_err_t zone_fsm_init(zone_event_cb_t cb)
             .pull_down_en = GPIO_PULLDOWN_DISABLE,
             .intr_type    = GPIO_INTR_DISABLE,
         };
-        gpio_config(&io_conf);
-        gpio_set_level(z->gpio_pin, 0);
+        esp_err_t err = gpio_config(&io_conf);
+        if (err != ESP_OK) {
+            z->enabled = false;
+            ESP_LOGE(TAG, "Zone %d: gpio_config failed for GPIO %d: %s",
+                     ch, z->gpio_pin, esp_err_to_name(err));
+            continue;
+        }
+
+        err = gpio_set_level(z->gpio_pin, 0);
+        if (err != ESP_OK) {
+            z->enabled = false;
+            ESP_LOGE(TAG, "Zone %d: gpio_set_level failed for GPIO %d: %s",
+                     ch, z->gpio_pin, esp_err_to_name(err));
+            continue;
+        }
 
         ESP_LOGI(TAG, "Zone %d: GPIO %d, max %ds, cooldown %ds, %s",
                  ch, z->gpio_pin, z->max_duration_s, z->cooldown_s,

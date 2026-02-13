@@ -1,9 +1,12 @@
-# Name,    Type,   SubType,   Offset,    Size,    Flags
-nvs,        data,   nvs,       0x9000,    0x6000,
-otadata,    data,   ota,       0xF000,    0x2000,
-phy_init,   data,   phy,       0x11000,   0x1000,
-factory,    app,    factory,   0x12000,   0x180000,
-ota_0,      app,    ota_0,     0x190000,  0x180000,
-ota_1,      app,    ota_1,     0x310000,  0x180000,
-storage,    data,   spiffs,    0x490000,  0x160000,
-coredump,   data,   coredump,  0x3F0000,  0x10000,
+# Name,      Type,  SubType,   Offset,    Size,    Flags
+# Layout para 4MB flash (ESP32 / ESP32-C3)
+# factory=1MB, ota_0=1MB, ota_1=1MB, storage=832KB, coredump=64KB
+# Total usado: 0x400000 (4MB)
+nvs,         data,  nvs,       0x9000,    0x6000,
+otadata,     data,  ota,       0xF000,    0x2000,
+phy_init,    data,  phy,       0x11000,   0x1000,
+factory,     app,   factory,   0x20000,   0x100000,
+ota_0,       app,   ota_0,     0x120000,  0x100000,
+ota_1,       app,   ota_1,     0x220000,  0x100000,
+storage,     data,  spiffs,    0x320000,  0xD0000,
+coredump,    data,  coredump,  0x3F0000,  0x10000,

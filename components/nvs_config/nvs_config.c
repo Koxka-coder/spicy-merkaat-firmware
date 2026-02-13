@@ -15,7 +15,7 @@ static nvs_handle_t s_zone_handle;
 void nvs_config_defaults_system(system_config_t *cfg)
 {
     memset(cfg, 0, sizeof(*cfg));
-    strncpy(cfg->mqtt_uri, "mqtt://mosquitto:1883", MQTT_URI_LEN - 1);
+    strncpy(cfg->mqtt_uri, "mqtt://192.168.1.144:1883", MQTT_URI_LEN - 1);  /* TODO: cambiar por tu IP local */
     cfg->schedule_version = 0;
 
     /* derive device_id from base MAC */

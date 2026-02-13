@@ -68,7 +68,7 @@ esp_err_t spicy_mqtt_init(const spicy_mqtt_config_t *config)
              "garden/%s/cmd/#", config->device_id);
 
     const esp_mqtt_client_config_t mqtt_cfg = {
-        .broker.uri = config->broker_uri,
+        .broker.address.uri = config->broker_uri,
     };
 
     s_client = esp_mqtt_client_init(&mqtt_cfg);

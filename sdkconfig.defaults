@@ -1,7 +1,7 @@
 # ESP-IDF configuration defaults for Spicy Merkaat Firmware
 
-# ESP32 chipset configuration
-CONFIG_IDF_TARGET="esp32"
+# Flash size: 4MB (ESP32-C3-DevKit y ESP32-WROOM-32 estándar)
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
 
 # Panic handler: print backtrace and reboot
 CONFIG_ESP_SYSTEM_PANIC_PRINT_REBOOT=y

@@ -14,9 +14,15 @@ extern "C" {
 #define ZONE_COUNT  3
 
 /* GPIO pins per zone (from arquitectura.md §5.2) */
+#if CONFIG_IDF_TARGET_ESP32C3
+#define ZONE0_GPIO  4
+#define ZONE1_GPIO  5
+#define ZONE2_GPIO  6
+#else
 #define ZONE0_GPIO  32
 #define ZONE1_GPIO  33
 #define ZONE2_GPIO  25
+#endif
 
 /* ── FSM states ───────────────────────────────────────────── */
 
