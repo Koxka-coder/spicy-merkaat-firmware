@@ -1,57 +1,34 @@
-/**
- * @file adc_driver.h
- * @brief ADC driver for sensor readings
- *
- * This module provides ADC driver functionality for reading
- * analog sensor values.
- */
-
 #ifndef ADC_DRIVER_H
 #define ADC_DRIVER_H
 
 #include "esp_err.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * @brief ADC channel configuration
- */
-typedef enum {
-    ADC_CHANNEL_0 = 0,
-    ADC_CHANNEL_1,
-    ADC_CHANNEL_2,
-    ADC_CHANNEL_3,
-    ADC_CHANNEL_4,
-    ADC_CHANNEL_5,
-    ADC_CHANNEL_6,
-    ADC_CHANNEL_7,
-    ADC_CHANNEL_MAX
-} adc_channel_t;
+#define SOIL_SENSOR_COUNT  3
+
+/** Per-zone sensor reading */
+typedef struct {
+    uint16_t raw;            /* 0-4095 (12-bit) */
+    float    moisture_pct;   /* 0.0-100.0       */
+} soil_reading_t;
 
 /**
- * @brief Initialize ADC driver
- * 
- * @return ESP_OK on success, error code otherwise
+ * Initialize sensor driver.
+ * @param synthetic  true = generate fake data (Phase 1)
  */
-esp_err_t adc_driver_init(void);
+esp_err_t adc_driver_init(bool synthetic);
 
-/**
- * @brief Read ADC value from specified channel
- * 
- * @param channel ADC channel to read
- * @param value Pointer to store the read value
- * @return ESP_OK on success, error code otherwise
- */
-esp_err_t adc_driver_read(adc_channel_t channel, uint32_t *value);
+/** Read all SOIL_SENSOR_COUNT channels at once. */
+esp_err_t adc_driver_read_all(soil_reading_t readings[SOIL_SENSOR_COUNT]);
 
-/**
- * @brief Deinitialize ADC driver
- * 
- * @return ESP_OK on success, error code otherwise
- */
+/** Read a single channel (0-2). */
+esp_err_t adc_driver_read_channel(uint8_t channel, soil_reading_t *reading);
+
 esp_err_t adc_driver_deinit(void);
 
 #ifdef __cplusplus

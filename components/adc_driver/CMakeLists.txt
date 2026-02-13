@@ -1,3 +1,3 @@
 idf_component_register(SRCS "adc_driver.c"
                     INCLUDE_DIRS "include"
-                    REQUIRES "driver" "esp_adc")
+                    REQUIRES "esp_hw_support")

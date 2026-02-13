@@ -1,0 +1,24 @@
+menu "Spicy Merkaat Development"
+
+    config SPICY_DEV_MODE
+        bool "Enable development mode"
+        default y
+        help
+            When enabled, WiFi credentials from menuconfig are written
+            to NVS if NVS is empty. Disable for production.
+
+    config SPICY_WIFI_SSID
+        string "WiFi SSID"
+        default "MySSID"
+        depends on SPICY_DEV_MODE
+        help
+            WiFi network name for development.
+
+    config SPICY_WIFI_PASS
+        string "WiFi Password"
+        default "MyPassword"
+        depends on SPICY_DEV_MODE
+        help
+            WiFi password for development.
+
+endmenu

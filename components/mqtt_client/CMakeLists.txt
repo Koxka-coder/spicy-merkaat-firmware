@@ -1,3 +1,3 @@
-idf_component_register(SRCS "mqtt_client.c"
+idf_component_register(SRCS "spicy_mqtt.c"
                     INCLUDE_DIRS "include"
-                    REQUIRES "esp-mqtt" "esp_wifi" "esp_event")
+                    REQUIRES "mqtt" "esp_event")
