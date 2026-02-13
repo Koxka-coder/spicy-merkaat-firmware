@@ -3,20 +3,30 @@
 # ESP32 chipset configuration
 CONFIG_IDF_TARGET="esp32"
 
-# WiFi configuration
+# Panic handler: print backtrace and reboot
+CONFIG_ESP_SYSTEM_PANIC_PRINT_REBOOT=y
+
+# Bootloader: enable app rollback for OTA safety
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+
+# Custom partition table (OTA dual-slot + factory + SPIFFS + coredump)
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions_ota.csv"
+
+# FreeRTOS tick rate 1kHz (1ms resolution for FSM timers)
+CONFIG_FREERTOS_HZ=1000
+
+# Task Watchdog: 30s timeout (safety layer 1)
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=30
+
+# WiFi buffer tuning
 CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM=10
 CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM=32
 CONFIG_ESP_WIFI_DYNAMIC_TX_BUFFER_NUM=32
 
-# MQTT configuration
+# MQTT protocol and offline outbox
 CONFIG_MQTT_PROTOCOL_311=y
-
-# OTA configuration
-CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
-
-# Partition table
-CONFIG_PARTITION_TABLE_CUSTOM=y
-CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions_ota.csv"
+CONFIG_MQTT_OUTBOX_EXPIRED_TIMEOUT_MS=10000
 
 # Logging level
 CONFIG_LOG_DEFAULT_LEVEL_INFO=y
